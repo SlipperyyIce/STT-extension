@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Getting Started Extension's Popup</title>
+    <style type="text/css">
+      body {
+        margin: 0px;
+        white-space: nowrap;
+      }
+
+      #container {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .start {
+        border: none; /* Remove the border */
+        border-radius: 50%; /* Make the button circular */
+        padding: 5px; /* Adjust the padding as desired */
+        cursor: pointer;
+        background-color: transparent; /* Set the initial background color as transparent */
+      }
+
+      .start:hover {
+        background-color: #f2f2f2; /* Change the background color on hover */
+      }
+
+      .start img {
+        width: 30px; /* Adjust the desired width */
+        height: auto; /* Maintain the aspect ratio */
+        transition: 0.3s; /* Add a smooth transition effect */
+      }
+
+      
+    </style>
+
+    <script src="js/Mic.js"></script>
+  </head>
+
+  <body>
+    <div id="container">
+      <button class="start">
+        <img id="microphone-image" src="js/images/microphone.png" alt="Microphone" />
+      </button>
+    </div>
+  </body>
+</html>

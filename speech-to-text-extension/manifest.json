@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+
+  },
+
+  "name": "Speech to Text",
+  "description": "Record an audio sample and this will hopefully write it in a doc",
+  "version": "1.0",
+
+  "action": {
+    "default_icon": "/src/js/images/microphone.png",
+    "default_popup": "src/popup.html"
+  },
+
+
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "contentSettings",
+    "scripting"
+  ],
+  
+  "background": {
+    "service_worker": "background.js"
+    
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content-script.js"]
+    }
+  ]
+}

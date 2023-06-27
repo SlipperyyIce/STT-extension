@@ -1,0 +1,17 @@
+{
+  "name": "Offscreen API - STT",
+  "version": "1.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {"default_icon": "/src/js/images/microphone.png"},
+  "permissions": ["offscreen", "clipboardWrite"]
+}

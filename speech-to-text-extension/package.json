@@ -1,0 +1,22 @@
+{
+  "name": "speech-to-text",
+  "version": "0.1.0",
+  "description": "Description",
+  "scripts": {
+    "build": "parcel build src/js/main.js --dist-dir src/build/",
+    "watch": "parcel watch src/js/main.js --dist-dir src/build/"
+  },
+  "author": "Daniel B",
+  "dependencies": {
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.14.5",
+    "@parcel/transformer-react-refresh-wrap": "^2.0.0-rc.0",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "parcel": "^2.9.3",
+    "process": "^0.11.10"
+  }
+}
