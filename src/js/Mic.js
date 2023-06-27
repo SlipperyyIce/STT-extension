@@ -12,7 +12,7 @@ window.onload = () => {
       } else {
         setting = "chrome-extension://" + chrome.runtime.id + "/src/settings.html"
         chrome.tabs.create({ url: setting });
-        chrome.runtime.sendMessage(chrome.runtime.id,{})
+        
  
       }
   });
