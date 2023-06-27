@@ -12,6 +12,10 @@
   "background": {
     "service_worker": "background.js"
   },
-  "action": {"default_icon": "/src/js/images/microphone.png"},
-  "permissions": ["offscreen", "clipboardWrite"]
+  "action": {
+    "default_icon": "/src/js/images/microphone.png",
+    "default_popup": "src/popup.html"
+
+  },
+  "permissions": ["offscreen", "clipboardWrite","tabs"]
 }

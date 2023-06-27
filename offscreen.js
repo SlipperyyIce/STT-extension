@@ -5,6 +5,10 @@ chrome.runtime.onMessage.addListener(handleMessages);
 // This function performs basic filtering and error checking on messages before
 // dispatching the
 // message to a more specific message handler.
+async function checkMic(){
+  
+}
+
 async function handleMessages(message) {
   // Return early if this message isn't meant for the offscreen document.
   if (message.target !== 'offscreen-doc') {
@@ -14,6 +18,7 @@ async function handleMessages(message) {
   // Dispatch the message to an appropriate handler.
   switch (message.type) {
     case 'copy-data-to-clipboard':
+      checkMic();
       toggleRecording(message.data);
       break;
     default:
@@ -59,12 +64,13 @@ async function startRecording(data) {
     textEl.select();
     document.execCommand('copy');
   } finally {
-   
+    console.log("intesting")
   }
   
 }
 
 async function toggleRecording(data){
+  
   if (isRecording) {
     stopRecording("stp");        
   } else {

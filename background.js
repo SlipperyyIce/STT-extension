@@ -19,6 +19,14 @@ const textToCopy = `Hello world!`;
 // document to write the value of `textToCopy` to the system clipboard.
 chrome.action.onClicked.addListener(async () => {
   await addToClipboard(textToCopy);
+  await toggleRecording();
+});
+
+chrome.runtime.onMessage.addListener(async (request, message, sendResponse) => {
+  // Issue Token
+  await addToClipboard(textToCopy);
+  await toggleRecording();
+  return
 });
 
 // Solution 1 - As of Jan 2023, service workers cannot directly interact with
@@ -49,4 +57,18 @@ async function addToClipboard(value) {
 // replace the offscreen document based implementation with something like this.
 async function addToClipboardV2(value) {
   navigator.clipboard.writeText(value);
+}
+
+let isRecording = false;
+async function toggleRecording() {
+
+  isRecording = !isRecording;
+  let invertedValue = isRecording;
+  
+  if(invertedValue){
+    chrome.action.setIcon({ path: { "16": "/src/js/images/microphone-hover.png" }});
+  }
+  else{
+    chrome.action.setIcon({ path: { "16": "/src/js/images/microphone.png" }}); 
+  }
 }
