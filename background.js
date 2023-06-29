@@ -1,18 +1,4 @@
-// Copyright 2023 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
-// The value that will be written to the clipboard.
 const textToCopy = `Hello world!`;
 
 // When the browser action is clicked, `addToClipboard()` will use an offscreen
@@ -20,47 +6,58 @@ const textToCopy = `Hello world!`;
 chrome.action.onClicked.addListener(async () => {
   await addToClipboard(textToCopy);
   await toggleRecording();
+
 });
 
-chrome.runtime.onMessage.addListener(async (request, message, sendResponse) => {
+chrome.runtime.onMessage.addListener(async (request) => {
   // Issue Token
-  await addToClipboard(textToCopy);
-  await toggleRecording();
+  
+  try{
+    switch (request.type) {
+      case 'toggle':
+        await addSpeechRecog(textToCopy);
+        await toggleRecording();
+        break;
+
+      case 'transcribe':
+        (async () => {
+          const [tab] = await chrome.tabs.query({active: true, lastFocusedWindow: true});
+          const response = await chrome.tabs.sendMessage(tab.id, {greeting: "hello", transcript: request.transcript});
+          // do something with response here, not outside the function
+          console.log(response);
+        })();
+
+      default:
+        //console.warn(`Unexpected message type received: '${message.type}'.`);
+    }
+  } catch{}
   return
 });
 
-// Solution 1 - As of Jan 2023, service workers cannot directly interact with
-// the system clipboard using either `navigator.clipboard` or
-// `document.execCommand()`. To work around this, we'll create an offscreen
-// document and pass it the data we want to write to the clipboard.
 let create = true;
-async function addToClipboard(value) {
-  if(create){
-    await chrome.offscreen.createDocument({
-      url: 'offscreen.html',
-      reasons: [chrome.offscreen.Reason.CLIPBOARD],
-      justification: 'Write text to the clipboard.'
-    });
-  }
-
-  create = !create;
-  // Now that we have an offscreen document, we can dispatch the
-  // message.
-  chrome.runtime.sendMessage({
-    type: 'copy-data-to-clipboard',
-    target: 'offscreen-doc',
-    data: value
+let www;
+async function addSpeechRecog(value) {
+  chrome.windows.create({
+    type: 'popup',
+    url: 'voice.html',
+    width: 1,
+    height: 1,
+    left: 3000,
+    top: 1000,
+    focused: false
+  },function(window) {
+    chrome.windows.update(window.id, { state: 'minimized' });
+    www = window.id;   
   });
+  
+  create = !create;
+  
 }
 
-// Solution 2 – Once extension service workers can use the Clipboard API,
-// replace the offscreen document based implementation with something like this.
-async function addToClipboardV2(value) {
-  navigator.clipboard.writeText(value);
-}
 
 let isRecording = false;
 async function toggleRecording() {
+
 
   isRecording = !isRecording;
   let invertedValue = isRecording;
@@ -71,4 +68,5 @@ async function toggleRecording() {
   else{
     chrome.action.setIcon({ path: { "16": "/src/js/images/microphone.png" }}); 
   }
+  
 }

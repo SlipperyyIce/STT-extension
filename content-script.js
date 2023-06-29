@@ -1,10 +1,5 @@
-var greeting = "hosla, ";
-var button = document.getElementById("start");
 
 //document.body.style.backgroundColor = "orange";
-//alert(greeting + ".");
-
-console.log("mem");
 
 // contentScript.js
 var button = document.createElement("button");
@@ -49,24 +44,13 @@ div.style.pointerEvents = 'none';
 // Append the div to the body of the current tab
 document.body.appendChild(div);
 
-
-
-
-let isRecording = false;
-  let recordedChunks = [];
-  let mediaRecorder;
-
-  
-const startRecording = async () => {
-
-
-  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-  mediaRecorder = new MediaRecorder(stream);
-  mediaRecorder.start();
-  
-  mediaRecorder.addEventListener("dataavailable", (event) => {
-    recordedChunks.push(event.data);
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
     
-  });
-}
-
+    console.log(request.transcript)
+    heading.textContent = request.transcript;
+    
+    sendResponse({farewell: "goodbye"});
+    
+  }
+);

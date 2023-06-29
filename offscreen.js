@@ -2,12 +2,6 @@
 
 chrome.runtime.onMessage.addListener(handleMessages);
 
-// This function performs basic filtering and error checking on messages before
-// dispatching the
-// message to a more specific message handler.
-async function checkMic(){
-  
-}
 
 async function handleMessages(message) {
   // Return early if this message isn't meant for the offscreen document.
@@ -18,7 +12,7 @@ async function handleMessages(message) {
   // Dispatch the message to an appropriate handler.
   switch (message.type) {
     case 'copy-data-to-clipboard':
-      checkMic();
+      
       toggleRecording(message.data);
       break;
     default:
@@ -48,15 +42,10 @@ async function stopRecording(data) {
 async function startRecording(data) {
   try {
     
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorder = new MediaRecorder(stream);
-    mediaRecorder.start();
+    // Check if the browser supports the Web Speech API
     
-    mediaRecorder.addEventListener("dataavailable", (event) => {
-      recordedChunks.push(event.data);
-      
-    });
-
+    
+       
     // `document.execCommand('copy')` works against the user's selection in a web
     // page. As such, we must insert the string we want to copy to the web page
     // and to select that content in the page before calling `execCommand()`.

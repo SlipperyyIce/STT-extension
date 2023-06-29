@@ -17,5 +17,13 @@
     "default_popup": "src/popup.html"
 
   },
-  "permissions": ["offscreen", "clipboardWrite","tabs"]
+  "permissions": ["offscreen", "clipboardWrite","tabs","activeTab","scripting"],
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content-script.js"]
+    }
+  ]
+
 }
