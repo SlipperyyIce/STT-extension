@@ -1,0 +1,22 @@
+.containers {
+    min-width: 150px;
+    max-width: 200px;
+    text-align: center;
+    background-color: gray;
+    padding: 10px;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    z-index: 9999;
+    opacity: 0.5;
+    transform: translate(-50%,0%);
+    pointer-events: none;
+}
+.text{
+    color: black !important;
+    opacity: 1 !important;
+    font-size: 22px;
+}
+.root-class{
+    border:3px solid blue;margin:10px;padding:10px;width:200px;
+}
