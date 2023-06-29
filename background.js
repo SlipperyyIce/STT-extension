@@ -20,11 +20,16 @@ chrome.runtime.onMessage.addListener(async (request) => {
         break;
 
       case 'transcribe':
+        
         (async () => {
-          const [tab] = await chrome.tabs.query({active: true, lastFocusedWindow: true});
-          const response = await chrome.tabs.sendMessage(tab.id, {greeting: "hello", transcript: request.transcript});
-          // do something with response here, not outside the function
-          console.log(response);
+          try {   
+            const [tab] = await chrome.tabs.query({active: true, lastFocusedWindow: true});
+            const response = await chrome.tabs.sendMessage(tab.id, {greeting: "hello", transcript: request.transcript});
+            // do something with response here, not outside the function
+            console.log(response);
+          } catch (error) {
+              
+          }
         })();
 
       default:

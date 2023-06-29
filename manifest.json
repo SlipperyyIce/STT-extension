@@ -18,11 +18,13 @@
 
   },
   "permissions": ["offscreen", "clipboardWrite","tabs","activeTab","scripting"],
-
+  "host_permissions": ["<all_urls>"],
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
-      "js": ["content-script.js"]
+      "matches": ["<all_urls>"],
+      "css": ["content-style.css"],
+      "js": ["content-script.js"],
+      "run_at": "document_end"
     }
   ]
 
