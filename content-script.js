@@ -57,12 +57,22 @@ let delayTimeout;
 function retriggerDelay(delay) {
   clearTimeout(delayTimeout);
   div.classList.remove("invisible");
-  delayTimeout = setTimeout(setInvis, delay);
+  delayTimeout = setTimeout(function() {
+    setInvis();
+    addInput(txt.textContent);
+  }, delay);
+ 
 }
 function setInvis(){
   div.classList.add("invisible");
 }
 
+function addInput(transcript){
+  var currentElement = document.activeElement;
+  if (currentElement.tagName === 'INPUT' || currentElement.tagName === 'TEXTAREA') {
+    currentElement.value += transcript;
+  }
+}
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
