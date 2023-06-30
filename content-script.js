@@ -69,8 +69,15 @@ function setInvis(){
 
 function addInput(transcript){
   var currentElement = document.activeElement;
+  
   if (currentElement.tagName === 'INPUT' || currentElement.tagName === 'TEXTAREA') {
-    currentElement.value += transcript;
+  if (currentElement.value.length > 0) {
+    currentElement.value += ' ';
+  }
+  currentElement.value += transcript;
+  } else if (currentElement.tagName === 'IFRAME') {
+    const iframeDocument = currentElement.contentDocument || currentElement.contentWindow.document;
+    iframeDocument.body.textContent += transcript;
   }
 }
 

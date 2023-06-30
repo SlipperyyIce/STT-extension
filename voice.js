@@ -2,6 +2,8 @@
 
 window.onload = () => {
   //
+  const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
   function sendTranscript(transcript) {
     if (transcript !== "") {
       chrome.runtime.sendMessage(chrome.runtime.id, { type: "transcribe", transcript: transcript });
@@ -12,8 +14,7 @@ window.onload = () => {
     if ('webkitSpeechRecognition' in window) {
       // Create a new SpeechRecognition object
       
-      const SpeechRecognition =
-        window.SpeechRecognition || window.webkitSpeechRecognition;
+      
       
       const recognition = new SpeechRecognition();
       
@@ -22,10 +23,11 @@ window.onload = () => {
       recognition.continuous = true; // Keep listening for speech until stopped
       recognition.interimResults = true; // Get interim results as the user speaks
       
+      //recognition.onend = function(event) {console.log("end");}
       // Event handler for when speech is recognized
       
       recognition.onresult = function(event) {
-        try{        
+        try{       
           if (event.results[0].isFinal) {
             var transcript = event.results[event.results.length-1][0].transcript;
             //console.log("END:"+ event.results[event.results.length-1][0].transcript);
@@ -34,12 +36,12 @@ window.onload = () => {
             startRecognition();}
           else {
             var transcript = event.results[event.results.length - 2][0].transcript;
-            console.log(transcript);
-            sendTranscript(transcript);
-            
-            
+            //console.log(transcript);
+            sendTranscript(transcript);       
           }
-        } catch{}
+        } catch{
+          
+        }
 
       };
 
@@ -48,15 +50,16 @@ window.onload = () => {
         
         switch (event.error) {
           case 'no-speech':
-            startRecognition();
+            startRecognition();            
             break;
 
-          case 'aborted':
-            window.close();
+          case 'aborted':      
+            window.close();        
             break;
 
           default:
             console.error(event.error);
+            window.close();
             break;
         }              
       };

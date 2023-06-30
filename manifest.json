@@ -1,5 +1,6 @@
 {
-  "name": "Offscreen API - STT",
+  "name": "SpeechTT",
+  "description": "A Google Chrome extension that uses a speech recognition ai to convert speech to text",
   "version": "1.0",
   "manifest_version": 3,
   "icons": {
@@ -17,7 +18,7 @@
     "default_popup": "src/popup.html"
 
   },
-  "permissions": ["offscreen", "clipboardWrite","tabs","activeTab","scripting"],
+  "permissions": ["tabs","activeTab","scripting"],
   "host_permissions": ["<all_urls>"],
   "content_scripts": [
     {
