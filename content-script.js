@@ -68,17 +68,25 @@ function setInvis(){
 }
 
 function addInput(transcript){
-  var currentElement = document.activeElement;
   
-  if (currentElement.tagName === 'INPUT' || currentElement.tagName === 'TEXTAREA') {
-  if (currentElement.value.length > 0) {
-    currentElement.value += ' ';
+  const currentElement = document.activeElement;
+
+  console.log(document.activeElement);
+  
+  if (currentElement.tagName === 'INPUT' || currentElement.tagName === 'TEXTAREA')  {
+    if (currentElement.value.length > 0) {
+      currentElement.value += ' ';
+    }
+    currentElement.value += transcript;
+
+  } else if (currentElement.hasAttribute('contenteditable') && currentElement.getAttribute('contenteditable') === 'true') {
+    
+    if (currentElement.innerHTML.length > 0) {
+      currentElement.innerHTML += ' ';
+    }
+    currentElement.innerHTML += transcript;
   }
-  currentElement.value += transcript;
-  } else if (currentElement.tagName === 'IFRAME') {
-    const iframeDocument = currentElement.contentDocument || currentElement.contentWindow.document;
-    iframeDocument.body.textContent += transcript;
-  }
+  
 }
 
 chrome.runtime.onMessage.addListener(
